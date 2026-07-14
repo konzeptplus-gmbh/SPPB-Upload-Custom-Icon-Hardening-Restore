@@ -22,7 +22,7 @@ Place release ZIPs in a `dist/` directory or attach them to the GitLab release.
 | File | Purpose | SHA-256 |
 |---|---|---|
 | `files_sppb_uploadcustomicon_hardening_1.2.0_j4_j5_j6_with_deinstaller.zip` | Main Joomla installer. Installs the hardening files and includes safe restore-on-uninstall support. | `f8cd3cb7f4602071a5ffe12d98610d42bba54b5abdf8fffedbf15c2ce5c479f3` |
-| `files_sppb_uploadcustomicon_hardening_restore_1.0.0_j4_j5_j6.zip` | Standalone restore/deinstaller package. Use this when the older `1.1.0` package was already installed or when a separate restore package is preferred. | `99be9e6d52fd9cf2054464e62c9f4efaecf3399000c0d372b49bd4dfcf40a5be` |
+| `files_sppb_uploadcustomicon_hardening_restore_1.0.0_j4_j5_j6.zip` | Standalone restore/deinstaller package. Use this when the older `1.1.0` package was already installed or when a separate restore package is preferred. | `c79103b3f8bf8ed102a8da6e526fce72f0c37bc532ade7b5563ece9acd077300` |
 
 Verify release files after download:
 
