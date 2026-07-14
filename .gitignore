@@ -1,0 +1,85 @@
+# OS / editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.buildpath
+.settings/
+
+# Local environment
+.env
+.env.*
+!.env.example
+*.local
+*.local.*
+/.local/
+/tmp/
+/temp/
+/cache/
+/logs/
+
+# Joomla runtime files - do not commit from a live site
+/configuration.php
+/.htaccess
+/htaccess.txt
+/web.config
+/administrator/cache/
+/administrator/logs/
+/cache/
+/tmp/
+/logs/
+/installation/
+
+# Backups and generated archives
+*.bak
+*.backup
+*.old
+*.orig
+*.rej
+*.patch~
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# PHP tooling
+/vendor/
+/composer.phar
+/composer.lock
+/phpunit.xml
+/.phpunit.result.cache
+/.php-cs-fixer.cache
+
+# Node tooling, only relevant if build tools are added later
+/node_modules/
+/npm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*
+/pnpm-debug.log*
+/package-lock.json
+/yarn.lock
+/pnpm-lock.yaml
+
+# Build output
+/build/
+/dist/*
+!/dist/.gitkeep
+
+# Security / deployment secrets
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+id_rsa
+id_rsa.pub
+.sftp-config.json
+.ftpconfig
+deploy.php
