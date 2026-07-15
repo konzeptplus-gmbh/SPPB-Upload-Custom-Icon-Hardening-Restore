@@ -1,12 +1,40 @@
 <?php
 /**
- * Joomla 4.x / 5.x / 6.x standalone restore/deinstaller for SP Page Builder uploadCustomIcon hardening.
+ * Joomla 3.x / 4.x / 5.x / 6.x standalone restore/deinstaller for SP Page Builder uploadCustomIcon hardening.
  *
  * Creator: Agon Partners Innovation AG
- * Package: files_sppb_uploadcustomicon_hardening_restore
- * Version: 1.0.0
+ * Package: sppb_uploadcustomicon_hardening_restore
+ * Version: 1.1.1
  */
 defined('_JEXEC') or die;
+
+if (!function_exists('hash_equals'))
+{
+    function hash_equals($known_string, $user_string)
+    {
+        if (!is_string($known_string) || !is_string($user_string))
+        {
+            return false;
+        }
+
+        $knownLen = strlen($known_string);
+        $userLen  = strlen($user_string);
+
+        if ($knownLen !== $userLen)
+        {
+            return false;
+        }
+
+        $result = 0;
+
+        for ($i = 0; $i < $knownLen; $i++)
+        {
+            $result |= ord($known_string[$i]) ^ ord($user_string[$i]);
+        }
+
+        return $result === 0;
+    }
+}
 
 if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
 {
@@ -15,6 +43,7 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
         /** @var array<string,bool> */
         protected $allowedTargets = array(
             'components/com_sppagebuilder/controllers/asset.php' => true,
+            'components/com_sppagebuilder/helpers/helper.php' => true,
             'components/com_sppagebuilder/helpers/icon-upload-security.php' => true,
             'administrator/components/com_sppagebuilder/editor/traits/IconsTrait.php' => true,
         );
@@ -32,9 +61,9 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
                 return true;
             }
 
-            if (!defined('JVERSION') || version_compare(JVERSION, '4.0.0', '<') || version_compare(JVERSION, '7.0.0', '>='))
+            if (!defined('JVERSION') || version_compare(JVERSION, '3.9.0', '<') || version_compare(JVERSION, '7.0.0', '>='))
             {
-                $this->message('This restore package supports Joomla 4.x, 5.x, and 6.x only.', 'error');
+                $this->message('This restore package supports Joomla 3.x, 4.x, 5.x, and 6.x only.', 'error');
                 return false;
             }
 
@@ -52,7 +81,7 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
 
             if ($this->findBestBackupManifest() === null)
             {
-                $this->message('No suitable backup from files_sppb_uploadcustomicon_hardening was found. Nothing can be restored.', 'error');
+                $this->message('No suitable backup from sppb_uploadcustomicon_hardening was found. Nothing can be restored.', 'error');
                 return false;
             }
 
@@ -213,7 +242,7 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
 
         protected function findBestBackupManifest()
         {
-            $base = JPATH_ADMINISTRATOR . '/components/com_sppagebuilder/backups/agon_sppb_uploadcustomicon_hardening';
+            $base = JPATH_ADMINISTRATOR . '/components/com_sppagebuilder/backups/sppb_uploadcustomicon_hardening';
 
             if (!is_dir($base))
             {
@@ -288,7 +317,7 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
 
         protected function isValidBackupManifest(array $manifest)
         {
-            if (!isset($manifest['package']) || $manifest['package'] !== 'files_sppb_uploadcustomicon_hardening')
+            if (!isset($manifest['package']) || $manifest['package'] !== 'sppb_uploadcustomicon_hardening')
             {
                 return false;
             }
@@ -346,7 +375,7 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
 
             $path = JPATH_ROOT . '/' . str_replace('\\', '/', $entry['backup']);
             $real = realpath($path);
-            $base = realpath(JPATH_ADMINISTRATOR . '/components/com_sppagebuilder/backups/agon_sppb_uploadcustomicon_hardening');
+            $base = realpath(JPATH_ADMINISTRATOR . '/components/com_sppagebuilder/backups/sppb_uploadcustomicon_hardening');
 
             if ($real === false || $base === false)
             {
@@ -366,7 +395,7 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
 
         protected function createRestoreOperationBackup(array $manifest)
         {
-            $base = JPATH_ADMINISTRATOR . '/components/com_sppagebuilder/backups/agon_sppb_uploadcustomicon_hardening_deinstaller';
+            $base = JPATH_ADMINISTRATOR . '/components/com_sppagebuilder/backups/sppb_uploadcustomicon_hardening_restore';
             $stamp = gmdate('Ymd-His');
             $suffix = function_exists('random_bytes') ? bin2hex(random_bytes(4)) : str_replace('.', '', uniqid('', true));
             $dir = $base . '/' . $stamp . '-' . $suffix;
@@ -378,7 +407,7 @@ if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreCore', false))
             }
 
             $backupManifest = array(
-                'package' => 'files_sppb_uploadcustomicon_hardening_restore',
+                'package' => 'sppb_uploadcustomicon_hardening_restore',
                 'operation' => 'pre-restore safety backup',
                 'creator' => 'Agon Partners Innovation AG',
                 'created_utc' => gmdate('c'),
@@ -586,7 +615,7 @@ HTACCESS;
                     return;
                 }
             }
-            catch (Throwable $e)
+            catch (Exception $e)
             {
                 // Fall back to echo below.
             }
@@ -596,56 +625,65 @@ HTACCESS;
     }
 }
 
-// Legacy Joomla 4.0/4.1 fallback names. Joomla 4.2+ / 5 / 6 use the returned InstallerScriptInterface object below.
-if (!class_exists('files_sppb_uploadcustomicon_hardening_restoreInstallerScript', false))
+// Legacy Joomla 3.x / 4.0 / 4.1 fallback class names. Joomla 4.2+ / 5 / 6 use the InstallerScriptInterface bridge below.
+if (!class_exists('sppb_uploadcustomicon_hardening_restoreInstallerScript', false))
 {
-    class files_sppb_uploadcustomicon_hardening_restoreInstallerScript extends AgonSppbUploadcustomiconHardeningRestoreCore
+    class sppb_uploadcustomicon_hardening_restoreInstallerScript extends AgonSppbUploadcustomiconHardeningRestoreCore
     {
     }
 }
 
-if (!class_exists('FilesSppbUploadcustomiconHardeningRestoreInstallerScript', false))
+if (!class_exists('SppbUploadcustomiconHardeningRestoreInstallerScript', false))
 {
-    class FilesSppbUploadcustomiconHardeningRestoreInstallerScript extends AgonSppbUploadcustomiconHardeningRestoreCore
+    class SppbUploadcustomiconHardeningRestoreInstallerScript extends AgonSppbUploadcustomiconHardeningRestoreCore
     {
     }
 }
 
+// Joomla 4.2+ / 5 / 6 support. Wrapped in eval so the file remains parse-safe for legacy Joomla 3/PHP stacks.
 if (interface_exists('Joomla\\CMS\\Installer\\InstallerScriptInterface'))
 {
-    return new class () implements \Joomla\CMS\Installer\InstallerScriptInterface
+    if (!class_exists('AgonSppbUploadcustomiconHardeningRestoreScriptBridge', false))
     {
-        /** @var AgonSppbUploadcustomiconHardeningRestoreCore */
-        private $core;
+        eval(<<<'PHP'
+class AgonSppbUploadcustomiconHardeningRestoreScriptBridge implements \Joomla\CMS\Installer\InstallerScriptInterface
+{
+    /** @var AgonSppbUploadcustomiconHardeningRestoreCore */
+    private $core;
 
-        public function __construct()
-        {
-            $this->core = new AgonSppbUploadcustomiconHardeningRestoreCore();
-        }
+    public function __construct()
+    {
+        $this->core = new AgonSppbUploadcustomiconHardeningRestoreCore();
+    }
 
-        public function install(\Joomla\CMS\Installer\InstallerAdapter $adapter): bool
-        {
-            return $this->core->install($adapter);
-        }
+    public function install(\Joomla\CMS\Installer\InstallerAdapter $adapter): bool
+    {
+        return $this->core->install($adapter);
+    }
 
-        public function update(\Joomla\CMS\Installer\InstallerAdapter $adapter): bool
-        {
-            return $this->core->update($adapter);
-        }
+    public function update(\Joomla\CMS\Installer\InstallerAdapter $adapter): bool
+    {
+        return $this->core->update($adapter);
+    }
 
-        public function uninstall(\Joomla\CMS\Installer\InstallerAdapter $adapter): bool
-        {
-            return $this->core->uninstall($adapter);
-        }
+    public function uninstall(\Joomla\CMS\Installer\InstallerAdapter $adapter): bool
+    {
+        return $this->core->uninstall($adapter);
+    }
 
-        public function preflight(string $type, \Joomla\CMS\Installer\InstallerAdapter $adapter): bool
-        {
-            return $this->core->preflight($type, $adapter);
-        }
+    public function preflight(string $type, \Joomla\CMS\Installer\InstallerAdapter $adapter): bool
+    {
+        return $this->core->preflight($type, $adapter);
+    }
 
-        public function postflight(string $type, \Joomla\CMS\Installer\InstallerAdapter $adapter): bool
-        {
-            return $this->core->postflight($type, $adapter);
-        }
-    };
+    public function postflight(string $type, \Joomla\CMS\Installer\InstallerAdapter $adapter): bool
+    {
+        return $this->core->postflight($type, $adapter);
+    }
+}
+PHP
+        );
+    }
+
+    return new AgonSppbUploadcustomiconHardeningRestoreScriptBridge();
 }

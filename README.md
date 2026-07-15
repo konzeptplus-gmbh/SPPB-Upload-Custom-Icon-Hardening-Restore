@@ -1,4 +1,4 @@
-# SP Page Builder `uploadCustomIcon` Hardening Package
+# SP Page Builder uploadCustomIcon Hardening Package
 
 **Creator:** Agon Partners Innovation AG  
 **Target extension:** SP Page Builder Pro 6.6.2  
@@ -15,27 +15,30 @@ The purpose of the package is to reduce the risk of arbitrary file upload, ZIP t
 
 This package is **not** a full replacement for vendor updates. Keep Joomla, SP Page Builder, Helix/Spectrum templates, and all third-party extensions updated. If a site was already compromised, this package does **not** clean existing backdoors, rogue users, modified templates, or stolen credentials.
 
-## Distributed packages
+## Repository packages
 
-Place release ZIPs in a `dist/` directory or attach them to the GitLab release.
+The current release contains two Joomla-installable ZIP packages.
 
-| File | Purpose | SHA-256 |
-|---|---|---|
-| `files_sppb_uploadcustomicon_hardening_1.2.0_j4_j5_j6_with_deinstaller.zip` | Main Joomla installer. Installs the hardening files and includes safe restore-on-uninstall support. | `f8cd3cb7f4602071a5ffe12d98610d42bba54b5abdf8fffedbf15c2ce5c479f3` |
-| `files_sppb_uploadcustomicon_hardening_restore_1.0.0_j4_j5_j6.zip` | Standalone restore/deinstaller package. Use this when the older `1.1.0` package was already installed or when a separate restore package is preferred. | `99be9e6d52fd9cf2054464e62c9f4efaecf3399000c0d372b49bd4dfcf40a5be` |
+| Package                                                            | Repository URL                                                                                                             | Purpose                                                                       |
+|--------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `sppb-uploadcustomiconhardening-<version>_j3_j4_j5_j6_cleanup.zip` | [SPPB-Upload-Custom-Icon-Hardening](https://github.com/konzeptplus-gmbh/SPPB-Upload-Custom-Icon-Hardening)                 | Main hardening installer with database cleanup and diagnostic search routine. |
+| `sppb-uploadcustomiconhardening-restore-<version>_j3_j4_j5_j6.zip` | [SPPB-Upload-Custom-Icon-Hardening-Restore](https://github.com/konzeptplus-gmbh/SPPB-Upload-Custom-Icon-Hardening-Restore) | Standalone restore/deinstaller package for rollback.                          |
 
-Verify release files after download:
+Verify the downloads from the releases before installation:
+
+[SPPB-Upload-Custom-Icon-Hardening Release](https://github.com/konzeptplus-gmbh/SPPB-Upload-Custom-Icon-Hardening/releases)
+
+[SPPB-Upload-Custom-Icon-Hardening-Restore Release](https://github.com/konzeptplus-gmbh/SPPB-Upload-Custom-Icon-Hardening-Restore/releases)
 
 ```bash
-sha256sum files_sppb_uploadcustomicon_hardening_1.2.0_j4_j5_j6_with_deinstaller.zip
-sha256sum files_sppb_uploadcustomicon_hardening_restore_1.0.0_j4_j5_j6.zip
+# Show case example.
+#
+# use the -c flag if you have downloaded the ZIP file from the release page with the checksum file.
+sha256sum sppb-uploadcustomicon-hardening-1.3.0_j3_j4_j5_j6_cleanup.zip
+sha256sum sppb-uploadcustomicon-hardening-restore-1.1.0_j3_j4_j5_j6.zip
 ```
 
-Expected output:
-
-```text
-f8cd3cb7f4602071a5ffe12d98610d42bba54b5abdf8fffedbf15c2ce5c479f3  files_sppb_uploadcustomicon_hardening_1.2.0_j4_j5_j6_with_deinstaller.zip
-99be9e6d52fd9cf2054464e62c9f4efaecf3399000c0d372b49bd4dfcf40a5be  files_sppb_uploadcustomicon_hardening_restore_1.0.0_j4_j5_j6.zip
+> The exact hashes are available in the release notes.
 ```
 
 ## Installation
@@ -49,7 +52,7 @@ System → Install → Extensions → Upload Package File
 Upload:
 
 ```text
-files_sppb_uploadcustomicon_hardening_1.2.0_j4_j5_j6_with_deinstaller.zip
+sppb-uploadcustomicon-hardening-restore-1.1.0_j3_j4_j5_j6.zip
 ```
 
 After installation:
@@ -104,15 +107,15 @@ The hardening package adds defensive checks to the custom icon upload flow:
 The main package manifest is located at the ZIP root:
 
 ```text
-files_sppb_uploadcustomicon_hardening.xml
+sppb_uploadcustomicon_hardening.xml
 ```
 
 Main package metadata:
 
 ```xml
 <extension type="file" version="4.0" method="upgrade">
-    <name>files_sppb_uploadcustomicon_hardening</name>
-    <element>files_sppb_uploadcustomicon_hardening</element>
+    <name>sppb_uploadcustomicon_hardening</name>
+    <element>sppb_uploadcustomicon_hardening</element>
     <author>Agon Partners Innovation AG</author>
     <creationDate>2026-07-03</creationDate>
     <copyright>Copyright (C) 2026 Agon Partners Innovation AG. Distributed under GPL-2.0-or-later.</copyright>

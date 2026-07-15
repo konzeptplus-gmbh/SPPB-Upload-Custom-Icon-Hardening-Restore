@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="file" version="4.0" method="upgrade">
-    <name>files_sppb_uploadcustomicon_hardening_restore</name>
-    <element>files_sppb_uploadcustomicon_hardening_restore</element>
+    <name>sppb_uploadcustomicon_hardening_restore</name>
+    <element>sppb_uploadcustomicon_hardening_restore</element>
     <author>Agon Partners Innovation AG</author>
     <creationDate>2026-07-03</creationDate>
     <copyright>Copyright (C) 2026 Agon Partners Innovation AG. Distributed under GPL-2.0-or-later.</copyright>
     <license>GNU General Public License version 2 or later</license>
-    <version>1.0.0</version>
-    <description>Joomla 4.x, 5.x, and 6.x standalone restore/deinstaller for the SP Page Builder uploadCustomIcon hardening package.</description>
+    <version>1.1.1</version>
+    <description>Joomla 4.x, 5.x, and 6.x standalone restore/deinstaller for the SP Page Builder uploadCustomIcon hardening patch.</description>
     <scriptfile>script.php</scriptfile>
     <fileset>
-        <files folder="metadata" target="administrator/manifests/files/files_sppb_uploadcustomicon_hardening_restore">
+        <files folder="metadata" target="administrator/manifests/files/sppb_uploadcustomicon_hardening_restore">
             <filename>README.md</filename>
             <filename>copyinfos.json</filename>
             <filename>LICENSE.txt</filename>
