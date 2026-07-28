@@ -1,0 +1,7 @@
+SP Page Builder uploadCustomIcon hardening universal installer
+Copyright (C) 2026 Agon Partners Innovation AG
+
+This package contains modified files derived from SP Page Builder, which is distributed under the GNU General Public License version 2 or later. This hardening package is distributed under the same license terms: GNU General Public License version 2 or later.
+
+Compatible installer target: Joomla 4.x, Joomla 5.x, Joomla 6.x.
+No warranty is provided. Test on staging before production use.

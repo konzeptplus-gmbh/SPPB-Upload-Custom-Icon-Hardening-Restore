@@ -1,7 +1,7 @@
 {
   "name": "SP Page Builder uploadCustomIcon hardening standalone restore/deinstaller",
-  "element": "files_sppb_uploadcustomicon_hardening_restore",
-  "version": "1.0.0",
+  "element": "sppb_uploadcustomicon_hardening_restore",
+  "version": "1.1.1",
   "creator": "Agon Partners Innovation AG",
   "creationDate": "2026-07-03",
   "joomlaCompatibility": {
@@ -14,9 +14,9 @@
     "maximumJoomlaExclusive": "7.0.0",
     "design": "file extension wrapper; restore is performed by script.php during install/update; no runtime plugin"
   },
-  "purpose": "Restores SP Page Builder files from backups created by files_sppb_uploadcustomicon_hardening.",
-  "backupSource": "administrator/components/com_sppagebuilder/backups/agon_sppb_uploadcustomicon_hardening",
-  "preRestoreSafetyBackupRoot": "administrator/components/com_sppagebuilder/backups/agon_sppb_uploadcustomicon_hardening_deinstaller",
+  "purpose": "Restores SP Page Builder files from backups created by sppb_uploadcustomicon_hardening.",
+  "backupSource": "administrator/components/com_sppagebuilder/backups/sppb_uploadcustomicon_hardening",
+  "preRestoreSafetyBackupRoot": "administrator/components/com_sppagebuilder/backups/sppb_uploadcustomicon_hardening_restore",
   "allowedTargets": [
     "components/com_sppagebuilder/controllers/asset.php",
     "components/com_sppagebuilder/helpers/icon-upload-security.php",

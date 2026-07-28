@@ -1,7 +1,7 @@
 # SP Page Builder uploadCustomIcon hardening standalone restore package
 
 Creator: Agon Partners Innovation AG  
-Version: 1.0.0  
+Version: 1.1.1  
 Supported Joomla versions: 4.x, 5.x, 6.x
 
 This is a Joomla-installable restore package for sites where the SP Page Builder uploadCustomIcon hardening package was already installed.
@@ -12,7 +12,7 @@ Install this ZIP only when you want to revert the hardening files back to the pr
 
 It searches for backup manifests under:
 
-`/administrator/components/com_sppagebuilder/backups/agon_sppb_uploadcustomicon_hardening/`
+`/administrator/components/com_sppagebuilder/backups/sppb_uploadcustomicon_hardening/`
 
 It selects the newest suitable pre-hardening backup and restores only these known files:
 
@@ -31,6 +31,6 @@ The restore is intentionally conservative:
 - If a file was changed by a later vendor update or manual edit, the package skips that file and reports it instead of overwriting it.
 - Before changing anything, it creates a pre-restore safety backup under:
 
-`/administrator/components/com_sppagebuilder/backups/agon_sppb_uploadcustomicon_hardening_deinstaller/`
+`/administrator/components/com_sppagebuilder/backups/sppb_uploadcustomicon_hardening_restore/`
 
 Install on staging first.
